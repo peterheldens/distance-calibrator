@@ -16,7 +16,7 @@ radio.onReceivedValue(function (name, value) {
     basic.showNumber(value)
 })
 let distance = 0
-distance = 0
+distance = -1
 radio.setGroup(1)
 radio.setTransmitPower(7)
 basic.showNumber(distance)
