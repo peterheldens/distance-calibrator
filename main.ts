@@ -1,5 +1,8 @@
 input.onButtonPressed(Button.A, function () {
-    radio.sendValue("distance", distance)
+    for (let index = 0; index <= 5; index++) {
+        radio.sendValue("distance", distance)
+        basic.pause(200)
+    }
     distance += 1
     basic.showIcon(IconNames.Yes)
     basic.showNumber(distance)
