@@ -1,25 +1,42 @@
 input.onButtonPressed(Button.A, function () {
-    for (let index = 0; index <= 5; index++) {
+    basic.clearScreen()
+    for (let index = 0; index <= 49; index++) {
         radio.sendValue("distance", distance)
-        basic.pause(200)
+        led.toggle(0, 0)
+        basic.pause(10)
     }
     distance += 1
-    basic.showIcon(IconNames.Yes)
     basic.showNumber(distance)
-})
-input.onButtonPressed(Button.AB, function () {
-    distance = 0
 })
 input.onButtonPressed(Button.B, function () {
-    basic.showNumber(distance)
+    distance = 0
 })
 radio.onReceivedValue(function (name, value) {
-    serial.writeNumbers([value, radio.receivedPacket(RadioPacketProperty.SignalStrength)])
-    serial.writeLine("")
-    basic.showNumber(value)
+    led.toggle(0, 0)
+    if (distance == value) {
+        counter += 1
+        sum += radio.receivedPacket(RadioPacketProperty.SignalStrength)
+        average = sum / counter
+        if (counter == 45) {
+            serial.writeNumbers([value, Math.round(average)])
+            basic.showNumber(value)
+        }
+    } else {
+        basic.clearScreen()
+        distance += 1
+        average = 0
+        counter = 0
+        sum = 0
+    }
 })
+let sum = 0
 let distance = 0
-distance = -1
+let counter = 0
+let average = 0
+average = 0
+counter = 0
+distance = 0
+sum = 0
 radio.setGroup(1)
 radio.setTransmitPower(7)
-basic.showNumber(distance)
+basic.showNumber(0)
